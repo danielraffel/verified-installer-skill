@@ -1,0 +1,4 @@
+interface:
+  display_name: "Setup Verified Installer"
+  short_description: "Create verified installers and signed releases"
+  default_prompt: "Use $setup-verified-installer to add a verified installer, release checksums, attestations, and prompt-free signed release refs to this project."
