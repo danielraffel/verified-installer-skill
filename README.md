@@ -87,6 +87,31 @@ Longer reusable prompts live in:
 - [prompts/apply-to-existing-repo.md](prompts/apply-to-existing-repo.md)
 - [prompts/apply-release-artifacts-to-existing-repo.md](prompts/apply-release-artifacts-to-existing-repo.md)
 
+## Tested Example Prompt
+
+This prompt was tested against
+[`danielraffel/pulp-example-plugins`](https://github.com/danielraffel/pulp-example-plugins),
+which publishes a signed and notarized macOS `.pkg` release asset without an
+installer script:
+
+```text
+Use the `setup-verified-release-artifacts` skill from:
+
+https://github.com/danielraffel/verified-release-skills/tree/main/setup-verified-release-artifacts
+
+I want to set up danielraffel/pulp-example-plugins so GitHub Release artifacts
+are easy to verify, without adding an install script.
+
+Inspect the repo first, classify how releases are built today, and add the
+smallest complete setup for SHA256SUMS, GitHub Release asset digest
+verification, artifact attestations where honest, immutable-release readiness,
+and concise README verification instructions.
+
+Do not overclaim provenance if artifacts are built manually or outside GitHub
+Actions. Leave unrelated dirty files alone. Validate the README commands from a
+clean temp directory before calling it done.
+```
+
 ## Repo Layout
 
 ```text
