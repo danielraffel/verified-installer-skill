@@ -32,24 +32,12 @@ https://github.com/danielraffel/verified-installer-skill/tree/main/setup-verifie
 I want to set up this existing repository so releases are easy to install and
 easy to verify.
 
-Repo path:
-<ABSOLUTE_REPO_PATH>
-
 GitHub repo:
 <OWNER>/<REPO>
 ```
 
 The longer reusable prompt lives in
 [prompts/apply-to-existing-repo.md](prompts/apply-to-existing-repo.md).
-
-## Blog Draft
-
-The first writeup is in
-[blog/making-install-sh-easier-to-trust.md](blog/making-install-sh-easier-to-trust.md).
-
-It explains what commit verification means, what SHA-256 checksums mean, why
-they answer different questions, and why this is useful for people installing
-software from an `install.sh` script.
 
 ## Repo Layout
 
@@ -59,8 +47,6 @@ setup-verified-installer/
   agents/openai.yaml
 prompts/
   apply-to-existing-repo.md
-blog/
-  making-install-sh-easier-to-trust.md
 ```
 
 ## Sources
