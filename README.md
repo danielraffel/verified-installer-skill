@@ -32,8 +32,7 @@ https://github.com/danielraffel/verified-installer-skill/tree/main/setup-verifie
 I want to set up this existing repository so releases are easy to install and
 easy to verify.
 
-GitHub repo:
-<OWNER>/<REPO>
+Path to Repo: [Add local path or GitHub URL]
 ```
 
 The longer reusable prompt lives in
