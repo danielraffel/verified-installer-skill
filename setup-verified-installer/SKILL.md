@@ -275,6 +275,36 @@ git config --global commit.gpgsign true
 git config --global tag.gpgSign true
 ```
 
+Audit SSH authentication separately from Git signing. Git may still fetch or
+push over SSH, and a broad SSH config such as `Host * IdentityAgent
+~/Library/Group Containers/2BUA8C4S2C.com.1password/t/agent.sock` can trigger
+1Password prompts even when commit signing is file-backed. Check the effective
+GitHub SSH config:
+
+```bash
+ssh -G github.com 2>/dev/null | grep -Ei 'identityagent|identityfile|identitiesonly|user '
+```
+
+If the user wants unattended GitHub operations and `identityagent` points at
+1Password, add a scoped override before any broad `Host *` rule:
+
+```sshconfig
+Host github.com
+  IdentityFile ~/.ssh/id_ed25519_macstudio
+  IdentitiesOnly yes
+  IdentityAgent none
+```
+
+Then prove SSH auth does not need an interactive prompt:
+
+```bash
+ssh -o BatchMode=yes -T git@github.com
+```
+
+Do not remove the user's global 1Password SSH agent setup if they use it for
+other hosts. Scope the no-agent override to GitHub or to the specific automation
+host that must run unattended.
+
 Before relying on the key, make sure the committer email maps to the GitHub
 account. GitHub's `no_user` verification reason means the signed commit's
 committer email is not associated with any GitHub user, even if
@@ -557,6 +587,9 @@ Before calling the setup done:
 - Verify signed commits and tags with `git verify-commit`, `git tag -v`, and
   GitHub's verification API or `Verified` badge. Treat `no_user` as a committer
   email configuration failure, not as a cryptographic-key failure.
+- If GitHub remotes use SSH and unattended operation is required, verify
+  `ssh -G github.com` does not route through the 1Password agent, then prove
+  `ssh -o BatchMode=yes -T git@github.com` authenticates without a prompt.
 - Prove automation can create a signed tag in a disposable repo before enabling
   signed release tags in a production repo.
 - Confirm private signing keys are backed up in 1Password and never appear in
