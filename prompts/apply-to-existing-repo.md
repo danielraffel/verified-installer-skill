@@ -3,7 +3,7 @@
 ```text
 Use the `setup-verified-installer` skill from:
 
-https://github.com/danielraffel/verified-installer-skill/tree/main/setup-verified-installer
+https://github.com/danielraffel/verified-release-skills/tree/main/setup-verified-installer
 
 I want to set up this existing repository so releases are easy to install and
 easy to verify.

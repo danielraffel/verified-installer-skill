@@ -305,6 +305,48 @@ Do not remove the user's global 1Password SSH agent setup if they use it for
 other hosts. Scope the no-agent override to GitHub or to the specific automation
 host that must run unattended.
 
+Also check peer-machine aliases used by Shipyard, tartci, or local remote-build
+flows. A broad `Host *` 1Password agent can still affect `m1`, `m3`, `m5`,
+`blackbook`, `macstudio`, VM, Linux, or Windows aliases even after GitHub is
+fixed. Add `IdentityAgent none` for those aliases too, while keeping their
+existing `IdentityFile` entries:
+
+```sshconfig
+Host github.com m1 m3 m5 blackbook macstudio pulp-vm pulp-linux pulp-win dev 192.168.64.* 192.168.65.* 127.0.0.1 localhost
+  IdentityAgent none
+```
+
+Check the exact hosts used by running automation, not only friendly aliases.
+Shipyard/tartci/local-CI scripts may invoke raw targets such as
+`admin@192.168.64.2`, `admin@192.168.64.3`, or localhost tunnel endpoints; a
+`Host dev` override does not apply to a direct raw-IP connection. Inspect active
+commands, then test the exact host:
+
+```bash
+ps auxww | grep -E 'ssh |shipyard|tartci' | grep -v grep
+for host in 192.168.64.2 192.168.64.3 127.0.0.1 localhost; do
+  ssh -G "$host" 2>/dev/null | grep -Ei '^(hostname|identityagent|identityfile|identitiesonly|user) '
+done
+```
+
+If raw local VM hosts are part of unattended automation, add their subnet or
+localhost patterns to the scoped no-agent block too. Tart VM IPs can rotate
+between jobs, so prefer a bounded pattern over chasing one address at a time:
+
+```sshconfig
+Host dev 192.168.64.* 192.168.65.* 127.0.0.1 localhost
+  IdentityAgent none
+```
+
+Prove every unattended alias resolves away from 1Password before running a
+build or release workflow:
+
+```bash
+for host in github.com m1 m3 m5 blackbook dev 192.168.64.2 192.168.64.3 192.168.65.19 127.0.0.1 localhost; do
+  ssh -G "$host" 2>/dev/null | grep -Ei '^(hostname|identityagent|identityfile|identitiesonly) '
+done
+```
+
 Before relying on the key, make sure the committer email maps to the GitHub
 account. GitHub's `no_user` verification reason means the signed commit's
 committer email is not associated with any GitHub user, even if

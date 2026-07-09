@@ -1,0 +1,4 @@
+interface:
+  display_name: "Setup Verified Release Artifacts"
+  short_description: "Add release checksums and provenance"
+  default_prompt: "Use $setup-verified-release-artifacts to add SHA256SUMS, artifact attestations, immutable release verification, and concise README verification instructions to this release-producing repo."
