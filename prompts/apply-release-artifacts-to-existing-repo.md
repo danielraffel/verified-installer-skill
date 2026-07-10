@@ -8,6 +8,10 @@ https://github.com/danielraffel/verified-release-skills/tree/main/setup-verified
 I want to set up this existing repository so GitHub Release artifacts are easy
 to verify, without adding an install script.
 
+This repo should use this skill only if there is no `install.sh`, `install.ps1`,
+upgrade command, or installer path to harden. If the repo has both an installer
+and downloadable release artifacts, use `setup-verified-installer` instead.
+
 Repo path:
 <ABSOLUTE_REPO_PATH>
 

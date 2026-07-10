@@ -7,7 +7,10 @@ description: >-
   .tar.gz, .deb, .rpm, .AppImage, .exe, .msi, .apk, .aab, or future iOS/mobile
   artifacts, and Codex should add SHA256SUMS, GitHub artifact attestations,
   immutable-release verification, release asset digest checks, signed source
-  refs, and concise README verification instructions.
+  refs, and concise README verification instructions. Use this only when there
+  is no install.sh/install.ps1 or installer path to create or harden; if the
+  repo has both an installer and downloadable release artifacts, use
+  setup-verified-installer instead.
 ---
 
 # Setup Verified Release Artifacts
@@ -17,6 +20,11 @@ description: >-
 Use this skill for repos where users download files from GitHub Releases, but
 there is no `install.sh` or shell installer to harden. The goal is to make
 release assets easy to verify and to describe the trust layers honestly.
+
+If a repo has both an installer and direct release downloads, use
+`setup-verified-installer`. That skill covers the installer path and the
+release artifacts it downloads or publishes. This skill is the narrower
+release-only path.
 
 Keep these layers separate:
 

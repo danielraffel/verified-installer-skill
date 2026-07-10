@@ -10,7 +10,10 @@ description: >-
   digests, add GitHub artifact attestations, configure Verified commits/tags,
   configure unattended file-backed SSH signing keys with 1Password backup,
   configure 1Password-agent signing, back signing keys up to 1Password, or
-  capture a Deno/Helm/Syft-style installer verification pattern.
+  capture a Deno/Helm/Syft-style installer verification pattern. Also use this
+  when the repo has both an installer and downloadable GitHub Release artifacts
+  such as .pkg, .dmg, .zip, .tar.gz, .exe, .msi, .deb, .rpm, .AppImage, .apk,
+  or .aab; this skill covers both the installer path and release artifacts.
 ---
 
 # Setup Verified Installer
@@ -20,6 +23,12 @@ description: >-
 Create a boring, copy-pasteable installer path that keeps the simple one-liner
 while giving cautious users a no-pipe checksum path and making every downloaded
 release archive verify before extraction.
+
+Use this skill when an installer exists or should exist, even if the repo also
+publishes direct GitHub Release downloads such as `.pkg`, `.dmg`, `.zip`,
+`.tar.gz`, `.exe`, `.msi`, `.deb`, `.rpm`, `.AppImage`, `.apk`, or `.aab`.
+Use `setup-verified-release-artifacts` only for repos with release downloads
+and no installer path to create or harden.
 
 The complete trust stack has separate layers. Keep them separate in docs and
 tests:

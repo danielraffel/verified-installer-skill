@@ -6,11 +6,12 @@ GitHub-hosted projects.
 There are two related skills:
 
 - [setup-verified-installer](setup-verified-installer) is for projects that
-  need a `curl | sh` or PowerShell installer.
+  have, or need, a `curl | sh` or PowerShell installer. Use this when the repo
+  has both an installer and downloadable release artifacts; it covers both.
 - [setup-verified-release-artifacts](setup-verified-release-artifacts) is for
   projects that publish downloadable release artifacts, such as `.pkg`, `.dmg`,
   `.zip`, `.tar.gz`, `.exe`, `.msi`, `.deb`, `.rpm`, `.AppImage`, `.apk`, or
-  `.aab`, but do not need an install script.
+  `.aab`, and do not need an install script.
 
 They are separate skills because installer hardening and release-artifact
 provenance have different failure modes, but they share the same trust model:
@@ -34,10 +35,12 @@ curl -fsSL https://example.com/install.sh | sh
 
 That skill covers the installer script, no-pipe verification, release archives,
 second-stage downloads, upgrade commands, and verifying downloads before
-extraction.
+extraction. If the same repo also publishes `.pkg`, `.dmg`, `.zip`, `.tar.gz`,
+or other direct release downloads, still use `setup-verified-installer`.
 
-Use `setup-verified-release-artifacts` when the repo only publishes files people
-download from GitHub Releases:
+Use `setup-verified-release-artifacts` only when the repo publishes files people
+download from GitHub Releases and there is no installer script or installer path
+to harden:
 
 ```text
 Project-1.2.3.pkg
@@ -49,6 +52,14 @@ Project-1.2.3-linux-x64.tar.gz
 That skill covers checksums, GitHub asset digests, artifact attestations when
 the workflow handles the final bytes, immutable releases, platform-specific
 verification commands, and concise README instructions.
+
+In short:
+
+| Repo shape | Skill |
+|---|---|
+| Installer only | `setup-verified-installer` |
+| Installer plus `.pkg` / `.zip` / other release assets | `setup-verified-installer` |
+| Release assets only, no installer | `setup-verified-release-artifacts` |
 
 ## Use It
 

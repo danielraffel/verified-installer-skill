@@ -10,6 +10,11 @@ easy to verify.
 
 Path to Repo: [Add local path or GitHub URL]
 
+Use this skill when the repo has, or should have, an installer path. If the same
+repo also publishes `.pkg`, `.dmg`, `.zip`, `.tar.gz`, or other downloadable
+release artifacts, still use this skill; it covers both the installer and the
+release artifacts.
+
 My goals:
 
 - Keep the simple installer flow, like `curl ... | sh` or the project's
